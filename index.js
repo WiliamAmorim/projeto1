@@ -19,7 +19,7 @@ app.get('/cotacao', async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar cotação' });
     }
 });
-
+// Primeiro
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
