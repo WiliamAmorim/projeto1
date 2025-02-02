@@ -16,6 +16,19 @@ app.get('/cotacao', async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar cotação' });
     }
 });
+app.get('/txcambio', async (req, res) => {
+    const symbol = req.query.symbol || 'USD';
+    const url = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${symbol}&to_currency=JPY&apikey=${process.env.APIKEY}`;
+
+    try {
+        const response = await axios.get(url);
+        const data = response.data;
+        res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao buscar cotação' });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
