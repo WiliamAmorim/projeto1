@@ -43,6 +43,19 @@ app.get('/exchange_rate', async (req, res) => {
     }
 });
 
+app.get('/dividends', async (req, res) => {
+    const symbol = req.query.symbol || 'IBM';
+    const url = `https://www.alphavantage.co/query?function=DIVIDENDS&symbol=${symbol}&apikey=${process.env.APIKEY}`;
+    try {
+        const response = await axios.get(url);
+        const data = response.data;
+        res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao buscar exchange rate' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
