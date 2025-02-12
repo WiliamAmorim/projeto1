@@ -55,7 +55,17 @@ app.get('/dividends', async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar exchange rate' });
     }
 });
-
+app.get('/analytics', async (req, res) => {
+    const symbols = req.query.symbol || 'AAPL,MSFT,IBM';
+    const url = `https://alphavantageapi.co/timeseries/analytics?SYMBOLS=${symbols}&RANGE=2023-07-01&RANGE=2023-08-31&INTERVAL=DAILY&OHLC=close&CALCULATIONS=MEAN,STDDEV,CORRELATION&apikey=demo`;    try {
+        const response = await axios.get(url);
+        const data = response.data;
+        res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao buscar exchange rate' });
+    }
+});
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
